@@ -16,10 +16,9 @@ INCLUDES =	-I .
 HEADERS = includes/malloc.h
 
 # Shared library
-NAME =		libft_malloc.so
-OSNAME =	libft_malloc_${HOSTTYPE}.so
+NAME =	libft_malloc_${HOSTTYPE}.so
 
-LINK = 	${CC} -shared -o ${NAME} ${OBJS} && ln -sf ${NAME} ${OSNAME}
+LINK = 	${CC} -shared -o ${NAME} ${OBJS} && ln -sf ${NAME} libft_malloc.so
 
 # Libft
 LIBFT = cd libft && make bonus
@@ -38,7 +37,7 @@ ${NAME}:	${OBJS} ${HEADERS}
 all:		${NAME}
 
 test:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror main.c -lft_malloc_${HOSTTYPE}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror main.c -lft_malloc
 
 clean:
 			rm -f ${OBJS}
@@ -48,7 +47,7 @@ clean:
 
 fclean:		clean
 			rm -f ${NAME}
-			rm -f ${OSNAME}
+			rm -f libft_malloc.so
 			rm -f a.out
 			cd libft && make fclean
 
