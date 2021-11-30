@@ -14,10 +14,10 @@ INCLUDES =	./includes/malloc.h
 
 NAME =		libft_malloc.so
 
-LINK = 	ar -x libft.a
-		-shared -Wl,-soname,libctest.so.1 -o libctest.so.1.0   *.o
+LINK = 	-shared -Wl,-soname,libft_malloc.so.1 -o libctest.so.1.0   *.o
 
 LIBFT = cd libft && make bonus
+UNLINK_LIBFT = ar -x libft.a
 
 ${NAME}:	${OBJS} ./includes/malloc.h
 			cd libft && make bonus
