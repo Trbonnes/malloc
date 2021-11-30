@@ -5,19 +5,18 @@ ifeq ($(HOSTTYPE),)
 HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-SRCS = ./malloc.c ./realloc.c ./free.c
-
+SRCS = src/malloc.c src/realloc.c src/free.c
 OBJECTSDIR = objs
 OBJS = $(addprefix $(OBJECTSDIR)/, $(subst .c,.o,$(SRCS)))
 
-INCLUDES =	./includes/malloc.h
+INCLUDES =	includes
 
 NAME =		libft_malloc.so
 
-LINK = 	-shared -Wl,-soname,libft_malloc.so.1 -o libctest.so.1.0   *.o
+LINK = 	${CC} -shared -Wl,-soname, libft_malloc.so *.o && ln -sf libft_malloc_${HOSTTYPE}.so
 
 LIBFT = cd libft && make bonus
-UNLINK_LIBFT = ar -x libft.a
+UNLINK_LIBFT = ar -x libft.a --output ${OBJECTSDIR}
 
 ${NAME}:	${OBJS} ./includes/malloc.h
 			cd libft && make bonus
