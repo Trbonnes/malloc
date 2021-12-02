@@ -8,9 +8,9 @@ endif
 LIBRARY_PATH = $(shell pwd)
 
 # Sources
-SRCS = src/malloc.c src/realloc.c src/free.c src/page.c
+SRCS = src/malloc.c src/realloc.c src/free.c src/page.c src/block.c
 OBJECTSDIR = objs
-OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o)
+OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o block.o)
 
 INCLUDES =	-I .
 HEADERS = includes/malloc.h

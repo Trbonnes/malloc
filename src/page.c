@@ -9,6 +9,10 @@ static rlim_t getDataLimit(void) {
 	return (rlimit.rlim_max);
 }
 
+size_t findMaxDefragSize(t_page *page) {
+
+}
+
 t_pageType getPageType(size_t size) {
     if (size <= (size_t)TINY_BLOCK_SIZE)
 		return (TINY);
@@ -29,7 +33,7 @@ size_t getPageSize(size_t size) {
 
 }
 
-void *allocateNewPage(size_t size) {
+void* allocateNewPage(size_t size) {
     t_page *page;
     size_t pageSize = getPageSize(size);
 
@@ -41,10 +45,15 @@ void *allocateNewPage(size_t size) {
         return NULL;
     page->type = getPageType(size);
     page->totalSize = pageSize;
-    page->availableSize = pageSize - sizeof(t_page);
-    page->maxDefragSize = pageSize - sizeof(t_page);
-    page->next = NULL;
+    page->availableSize = pageSize - sizeof(t_page) - sizeof(t_block);
+    page->maxDefragSize = pageSize - sizeof(t_page) - sizeof(t_block);
+    page->blockCount = 1;
 
+    t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
+    block->dataSize = page->maxDefragSize
+    block->freed = TRUE;
+
+    page->next = NULL;
     if (!g_page_head)
         page->prev = NULL;
     else {

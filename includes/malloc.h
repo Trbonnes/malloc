@@ -17,11 +17,9 @@ typedef enum	e_pageType {
 }				t_pageType;
 
 typedef struct s_block {
+    
     size_t dataSize;
     t_bool freed;
-
-    struct s_block *next;
-    struct s_block *prev;
 
 }   t_block;
 
@@ -37,12 +35,10 @@ typedef struct s_page {
     struct s_page *next;
     struct s_page *prev;
 
-    struct s_block *blocks;
-
 }   t_page;
 
-#define BLOCK_SHIFT_FORWARD(start)((void *)start + sizeof(t_block))
-#define BLOCK_SHIFT_BACKWARD(start)((void *)start - sizeof(t_block))
+#define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
+#define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
 
 /*
 For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
@@ -67,8 +63,14 @@ void show_alloc_mem();
 Page methods
 */
 
-static rlim_t getDataLimit(void);
 t_pageType getPageType(size_t size);
 size_t getPageSize(size_t size);
-void *allocateNewPage(size_t size);
+void* allocateNewPage(size_t size);
 void* findAvailablePage(size_t size);
+size_t findMaxDefragSize(t_page *page);
+
+/*
+Block methods
+*/
+
+void *findAvailableBlock(t_page *page, size_t size);
