@@ -23,13 +23,13 @@ t_pageType getPageType(size_t size) {
 
 size_t getPageSize(size_t size) {
 
-    t_pageType type = getPageType(size_t size);
+    t_pageType type = getPageType(size);
 
     if (type == TINY)
 		return ((size_t)TINY_ALLOCATION_SIZE);
 	else if (type == SMALL)
 		return ((size_t)SMALL_ALLOCATION_SIZE);
-	return (size + sizeof(t_heap) + sizeof(t_block));
+	return (size + sizeof(t_page) + sizeof(t_block));
 
 }
 
@@ -40,7 +40,7 @@ void* allocateNewPage(size_t size) {
     if (pageSize > getDataLimit())
         return NULL;
 
-    page = (t_page *)mmap(NULL, pageSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    page = (t_page *)mmap(NULL, pageSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (page == MAP_FAILED)
         return NULL;
     page->type = getPageType(size);
@@ -50,7 +50,7 @@ void* allocateNewPage(size_t size) {
     page->blockCount = 1;
 
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
-    block->dataSize = page->maxDefragSize
+    block->dataSize = page->maxDefragSize;
     block->freed = TRUE;
 
     page->next = NULL;
@@ -70,7 +70,7 @@ void* allocateNewPage(size_t size) {
 void* findAvailablePage(size_t size) {
     t_page *page = g_page_head;
     
-    while (page && size < page->maxDefragSize) {page = page->next}
+    while (page && size < page->maxDefragSize) { page = page->next; }
 
     return page ? page : allocateNewPage(size);  
 }

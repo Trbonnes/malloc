@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
+#include "../libft/libft.h"
+
 typedef enum	e_bool {
 	FALSE,
 	TRUE
