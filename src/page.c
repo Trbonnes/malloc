@@ -42,6 +42,26 @@ void *allocateNewPage(size_t size) {
     page->type = getPageType(size);
     page->totalSize = pageSize;
     page->availableSize = pageSize - sizeof(t_page);
+    page->maxDefragSize = pageSize - sizeof(t_page);
+    page->next = NULL;
+
+    if (!g_page_head)
+        page->prev = NULL;
+    else {
+        t_page *tmp = g_page_head;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = page;
+        page->prev = tmp;
+    }
 
     return (page);
+}
+
+void* findAvailablePage(size_t size) {
+    t_page *page = g_page_head;
+    
+    while (page && size < page->maxDefragSize) {page = page->next}
+
+    return page ? page : allocateNewPage(size);  
 }

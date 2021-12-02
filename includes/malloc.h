@@ -29,6 +29,7 @@ typedef struct s_page {
 
     size_t totalSize;
     size_t availableSize;
+    size_t maxDefragSize;
     size_t blockCount;
 
     t_pageType type;
@@ -40,9 +41,8 @@ typedef struct s_page {
 
 }   t_page;
 
-
-#define PAGE_SHIFT(start)((void *)start + sizeof(t_page))
-#define BLOCK_SHIFT(start)((void *)start + sizeof(t_block))
+#define BLOCK_SHIFT_FORWARD(start)((void *)start + sizeof(t_block))
+#define BLOCK_SHIFT_BACKWARD(start)((void *)start - sizeof(t_block))
 
 /*
 For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
@@ -71,3 +71,4 @@ static rlim_t getDataLimit(void);
 t_pageType getPageType(size_t size);
 size_t getPageSize(size_t size);
 void *allocateNewPage(size_t size);
+void* findAvailablePage(size_t size);
