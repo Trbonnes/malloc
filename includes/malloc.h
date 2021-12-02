@@ -9,19 +9,29 @@ typedef enum	e_bool {
 	FALSE,
 	TRUE
 }				t_bool;
+
+typedef enum	e_pageType {
+	TINY,
+	SMALL,
+    LARGE
+}				t_pageType;
+
 typedef struct s_block {
-    size_t data_size;
+    size_t dataSize;
     t_bool freed;
 
     struct s_block *next;
     struct s_block *prev;
 
 }   t_block;
+
 typedef struct s_page {
 
-    size_t total_size;
-    size_t available_size;
-    size_t block_count;
+    size_t totalSize;
+    size_t availableSize;
+    size_t blockCount;
+
+    t_pageType type;
 
     struct s_page *next;
     struct s_page *prev;
@@ -46,7 +56,18 @@ Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won
 #define SMALL_ALLOCATION_SIZE (16 * getpagesize())
 #define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
 
+t_page *g_page_head = NULL;
+
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
 void show_alloc_mem();
+
+/*
+Page methods
+*/
+
+static rlim_t getDataLimit(void);
+t_pageType getPageType(size_t size);
+size_t getPageSize(size_t size);
+void *allocateNewPage(size_t size);
