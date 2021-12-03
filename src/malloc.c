@@ -8,7 +8,7 @@ void *malloc(size_t size) {
     if (!size)
         return NULL;
 
-    if (!g_page_head) {
+    if (!(t_page *)g_page_head) {
         g_page_head = allocateNewPage(size);
         page = g_page_head;
     }

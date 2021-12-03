@@ -59,7 +59,7 @@ typedef struct s_page {
 
 }   t_page;
 
-static t_page *g_page_head = NULL;
+extern t_page *g_page_head;
 
 void free(void *ptr);
 void *malloc(size_t size);
