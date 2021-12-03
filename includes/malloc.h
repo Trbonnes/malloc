@@ -10,7 +10,7 @@
 #define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
 #define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
 
-/*
+/**********************************
 For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
 If we fill a page with 128 of them, it gives us a TINY_ALLOCATION_SIZE of 16KB (128 * 128).
 Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won’t be able to store all the 128 blocks.
@@ -20,7 +20,7 @@ For a pagesize of 4096 bytes
 TINY  - block < 128 bytes - heap 16 KB
 SMALL - block < 1024 bytes - heap 128 KB
 LARGE - block > 1024 bytes
-*/
+***********************************/
 
 #define TINY_ALLOCATION_SIZE (4 * getpagesize())
 #define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
@@ -66,9 +66,9 @@ void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
 void show_alloc_mem();
 
-/*
+/***********************************
 Page methods
-*/
+***********************************/
 
 t_pageType getPageType(size_t size);
 size_t getPageSize(size_t size);
@@ -76,8 +76,8 @@ void* allocateNewPage(size_t size);
 void* findAvailablePage(size_t size);
 size_t findMaxDefragSize(t_page *page);
 
-/*
+/***********************************
 Block methods
-*/
+***********************************/
 
 void *findAvailableBlock(t_page *page, size_t size);

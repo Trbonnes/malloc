@@ -15,6 +15,9 @@ void *malloc(size_t size) {
     else
         page = findAvailablePage(size);
 
+    if (!page)
+        return NULL;
+
     block = findAvailableBlock(page, size);
     ret = BLOCK_SHIFT_FORWARD(block, sizeof(t_block));
     ft_memset(ret, 0xaa, size);

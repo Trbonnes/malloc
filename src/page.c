@@ -10,7 +10,7 @@ static rlim_t getDataLimit(void) {
 }
 
 size_t findMaxDefragSize(t_page *page) {
-
+    return 0;
 }
 
 t_pageType getPageType(size_t size) {
