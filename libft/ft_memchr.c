@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/malloc.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

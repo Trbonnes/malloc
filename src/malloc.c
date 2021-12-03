@@ -5,6 +5,9 @@ void *malloc(size_t size) {
     t_page *page;
     t_block *block;
 
+    if (!size)
+        return NULL;
+
     if (!g_page_head) {
         g_page_head = allocateNewPage(size);
         page = g_page_head;

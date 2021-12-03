@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/malloc.h"
 
 size_t		ft_strlen(const char *s)
 {

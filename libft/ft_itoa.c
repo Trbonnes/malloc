@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/malloc.h"
 
 static int	ft_size(int tmp, int size)
 {

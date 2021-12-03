@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../includes/malloc.h"
 
 void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {

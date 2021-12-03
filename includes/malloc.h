@@ -5,7 +5,27 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#include "../libft/libft.h"
+#include "libft.h"
+
+#define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
+#define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
+
+/*
+For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
+If we fill a page with 128 of them, it gives us a TINY_ALLOCATION_SIZE of 16KB (128 * 128).
+Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won’t be able to store all the 128 blocks.
+16 KB / (128 + 32) = 102.4. So, counting the t_page at the start of the 16KB heap , we can store 102 times a 128 bytes malloc
+
+For a pagesize of 4096 bytes
+TINY  - block < 128 bytes - heap 16 KB
+SMALL - block < 1024 bytes - heap 128 KB
+LARGE - block > 1024 bytes
+*/
+
+#define TINY_ALLOCATION_SIZE (4 * getpagesize())
+#define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
+#define SMALL_ALLOCATION_SIZE (16 * getpagesize())
+#define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
 
 typedef enum	e_bool {
 	FALSE,
@@ -39,22 +59,7 @@ typedef struct s_page {
 
 }   t_page;
 
-#define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
-#define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
-
-/*
-For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
-If we fill a page with 128 of them, it gives us a TINY_ALLOCATION_SIZE of 16KB (128 * 128).
-Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won’t be able to store all the 128 blocks.
-16 KB / (128 + 32) = 102.4. So, counting the t_page at the start of the 16KB heap , we can store 102 times a 128 bytes malloc
-*/
-
-#define TINY_ALLOCATION_SIZE (4 * getpagesize())
-#define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
-#define SMALL_ALLOCATION_SIZE (16 * getpagesize())
-#define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
-
-t_page *g_page_head = NULL;
+static t_page *g_page_head = NULL;
 
 void free(void *ptr);
 void *malloc(size_t size);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/malloc.h"
 
 static void	*ft_delete(t_list **lst, void (*del)(void *))
 {

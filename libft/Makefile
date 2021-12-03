@@ -9,20 +9,20 @@ SRCS_B = ./ft_lstadd_back_bonus.c ./ft_lstdelone_bonus.c ./ft_lstmap_bonus.c ./f
 
 OBJ_B =	${SRCS_B:.c=.o}
 
-INCLUDES =	.
+INCLUDES =	../includes
 
 NAME =		../libft.a
 
 LINK = ar rcs
 
-${NAME}:	${SRCS} libft.h
+${NAME}:	${SRCS} ${INCLUDES}
 			${CC} ${CFLAGS} -I${INCLUDES} -c ${SRCS}
 			${LINK} ${NAME} ${OBJS}
 			ranlib ../libft.a	
 
 all:	${NAME}
 
-bonus:	${SRCS} ${SRCS_B} libft.h
+bonus:	${SRCS} ${SRCS_B} ${INCLUDES}
 		${CC} ${CFLAGS} -I${INCLUDES} -c ${SRCS} ${SRCS_B}
 		${LINK} ${NAME} ${OBJS} ${OBJ_B}
 		

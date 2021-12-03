@@ -10,17 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-static unsigned int		ft_strlen(char *c)
-{
-	unsigned int i;
-
-	i = 0;
-	while (*c++)
-		i++;
-	return (i);
-}
+#include "../includes/malloc.h"
 
 char					*ft_substr(char const *s,
 unsigned int start, size_t len)

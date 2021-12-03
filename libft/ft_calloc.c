@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-static void	ft_bzero(void *s, size_t n)
-{
-	unsigned char *ptr;
-
-	ptr = s;
-	while (n > 0)
-	{
-		*ptr++ = 0;
-		n--;
-	}
-}
+#include "../includes/malloc.h"
 
 void		*ft_calloc(size_t count, size_t size)
 {

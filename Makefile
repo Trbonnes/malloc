@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fPIC ${INCLUDES} -c
+CFLAGS = -Wall -Wextra -Werror -fPIC -c
 
 # Environment
 ifeq (${HOSTTYPE},)
@@ -12,8 +12,7 @@ SRCS = src/malloc.c src/realloc.c src/free.c src/page.c src/block.c
 OBJECTSDIR = objs
 OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o block.o)
 
-INCLUDES =	-I .
-HEADERS = includes/malloc.h
+INCLUDES = includes
 
 # Shared library
 NAME =	libft_malloc_${HOSTTYPE}.so
@@ -25,11 +24,11 @@ LIBFT = cd libft && make bonus
 UNLINK_LIBFT = ar -x libft.a --output ${OBJECTSDIR}
 
 # Compilation
-${OBJECTSDIR}/%.o: ${SRCS} ${HEADERS}
+${OBJECTSDIR}/%.o: ${SRCS} 
 	mkdir -p ${OBJECTSDIR}
-	${CC} ${CFLAGS} $< -o $@ ${INCLUDES}
+	${CC} ${CFLAGS} $< -o $@ -I${INCLUDES}
 
-${NAME}:	${OBJS} ${HEADERS}
+${NAME}:	${OBJS} ${INCLUDES}
 			cd libft && make bonus
 			${LINK}
 			export LD_LIBRARY_PATH=${LIBRARY_PATH}:$$LD_LIBRARY_PATH

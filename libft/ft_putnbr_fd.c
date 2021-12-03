@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-static void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
+#include "../includes/malloc.h"
 
 void		ft_putnbr_fd(int nb, int fd)
 {
