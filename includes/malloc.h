@@ -1,5 +1,4 @@
-#ifndef MALLOC_H
-# define MALLOC_H
+#pragma once
 
 # include <sys/resource.h>
 # include <sys/mman.h>
@@ -82,5 +81,3 @@ Block methods
 ***********************************/
 
 void *findAvailableBlock(t_page *page, size_t size);
-
-#endif

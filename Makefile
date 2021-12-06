@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fPIC -c
+CFLAGS = -Wall -Wextra -Werror -g -nostdlib -fPIC -c
+LFLAGS = -Wall -Wextra -Werror -g -shared -o
 
 # Environment
 ifeq (${HOSTTYPE},)
@@ -21,14 +22,13 @@ NAME =	libft_malloc_${HOSTTYPE}.so
 
 
 ifneq (${OSTYPE}, Linux)
-LINK = ${CC} -shared -o ${NAME} ${OBJS} -Wl,-force_load libft.a && ln -sf ${NAME} libft_malloc.so
+LINK = ${CC} ${LFLAGS} ${NAME} ${OBJS} -Wl,-force_load libft.a && ln -sf ${NAME} libft_malloc.so
 else
-LINK = 	${CC} -shared -o ${NAME} ${OBJS} -Wl,--whole-archive libft.a && ln -sf ${NAME} libft_malloc.so
+LINK = 	${CC} ${LFLAGS} ${NAME} ${OBJS} -Wl,--whole-archive libft.a && ln -sf ${NAME} libft_malloc.so
 endif
 
 # Libft
 LIBFT = cd libft && make bonus
-UNLINK_LIBFT = ar -x --output ${OBJECTSDIR} libft.a 
 
 # Compilation
 ${OBJECTSDIR}/%.o: ${SRCS} 
