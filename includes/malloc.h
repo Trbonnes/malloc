@@ -1,14 +1,15 @@
-#pragma once
+#ifndef MALLOC_H
+# define MALLOC_H
 
-#include <sys/resource.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <pthread.h>
+# include <sys/resource.h>
+# include <sys/mman.h>
+# include <unistd.h>
+# include <pthread.h>
 
-#include "libft.h"
+# include "libft.h"
 
-#define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
-#define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
+# define BLOCK_SHIFT_FORWARD(start, offset)((void *)start + offset)
+# define BLOCK_SHIFT_BACKWARD(start, offset)((void *)start - offset)
 
 /**********************************
 For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
@@ -22,10 +23,10 @@ SMALL - block < 1024 bytes - heap 128 KB
 LARGE - block > 1024 bytes
 ***********************************/
 
-#define TINY_ALLOCATION_SIZE (4 * getpagesize())
-#define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
-#define SMALL_ALLOCATION_SIZE (16 * getpagesize())
-#define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
+# define TINY_ALLOCATION_SIZE (4 * getpagesize())
+# define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
+# define SMALL_ALLOCATION_SIZE (16 * getpagesize())
+# define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
 
 typedef enum	e_bool {
 	FALSE,
@@ -81,3 +82,5 @@ Block methods
 ***********************************/
 
 void *findAvailableBlock(t_page *page, size_t size);
+
+#endif

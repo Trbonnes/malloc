@@ -1,4 +1,4 @@
-#include "../includes/malloc.h"
+#include "malloc.h"
 
 void divideBlock(t_block **block, size_t size) {
     t_block *tmp = *block;

@@ -5,7 +5,9 @@ CFLAGS = -Wall -Wextra -Werror -fPIC -c
 ifeq (${HOSTTYPE},)
 HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
+
 LIBRARY_PATH = $(shell pwd)
+OSTYPE = $(shell uname -s)
 
 # Sources
 SRCS = src/malloc.c src/realloc.c src/free.c src/page.c src/block.c
@@ -17,23 +19,30 @@ INCLUDES = includes
 # Shared library
 NAME =	libft_malloc_${HOSTTYPE}.so
 
-LINK = 	${CC} -shared -o ${NAME} ${OBJS} && ln -sf ${NAME} libft_malloc.so
+
+ifneq (${OSTYPE}, Linux)
+LINK = ${CC} -shared -o ${NAME} ${OBJS} -Wl,-force_load libft.a && ln -sf ${NAME} libft_malloc.so
+else
+LINK = 	${CC} -shared -o ${NAME} ${OBJS} -Wl,--whole-archive libft.a && ln -sf ${NAME} libft_malloc.so
+endif
 
 # Libft
 LIBFT = cd libft && make bonus
-UNLINK_LIBFT = ar -x libft.a --output ${OBJECTSDIR}
+UNLINK_LIBFT = ar -x --output ${OBJECTSDIR} libft.a 
 
 # Compilation
 ${OBJECTSDIR}/%.o: ${SRCS} 
 	mkdir -p ${OBJECTSDIR}
-	${CC} ${CFLAGS} $< -o $@ -I${INCLUDES}
+	${CC} ${CFLAGS} $< -o $@ -I ${INCLUDES}
 
 ${NAME}:	${OBJS} ${INCLUDES}
-			cd libft && make bonus
+			${LIBFT}
 			${LINK}
 			export LD_LIBRARY_PATH=${LIBRARY_PATH}:$$LD_LIBRARY_PATH
 
 all:		${NAME}
+
+libft: 		${LIBFT}
 
 test:		${NAME}
 			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror main.c -lft_malloc
