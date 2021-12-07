@@ -9,11 +9,69 @@ static rlim_t getDataLimit(void) {
 	return (rlimit.rlim_max);
 }
 
+t_bool isLastPage(t_pageType type) {
+
+    t_page *page = g_page_head;
+    size_t count = 0;
+
+    while (page) {
+        if (page->type == type)
+            count++;
+        if (count >= 2)
+            return FALSE;
+        page = page->next;
+    }
+    
+    return TRUE;
+}
+
+t_bool toRemove(t_pageType type, size_t pageSize, size_t blockSize) {
+
+    if (pageSize == blockSize && (type == LARGE || isLastPage(type) == FALSE))
+        return TRUE;
+    
+    return FALSE;
+}
+
+void removeEmptyPage(t_page *page) {
+    t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
+
+    if (toRemove(page->type,
+    page->totalSize,
+    block->dataSize + sizeof(t_page) + sizeof(t_block)
+    ) == FALSE) {
+        return ;
+    }
+
+	if (page->next) {
+		page->next->prev = page->prev;
+    }
+	if (page->prev) {
+		page->prev->next = page->next;
+    }
+    else {
+        g_page_head = page->next;
+    }
+	munmap(page,page->totalSize);
+}
+
 void defragPage(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
-    t_block *prev;
-    size_t tmpSize = sizeof(t_page);
+    t_block *next = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
+    size_t tmpSize = sizeof(t_page) + sizeof(t_block) + block->dataSize;
 
+    while (tmpSize < page->totalSize) {
+        tmpSize += sizeof(t_block) + next->dataSize;
+        if (block->freed == TRUE && next->freed == TRUE) {
+            block->dataSize += sizeof(t_block) + next->dataSize;
+            next = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
+        }
+        else if (tmpSize < page->totalSize) {
+            block = next;
+            next = BLOCK_SHIFT_FORWARD(next, sizeof(t_block) + block->dataSize);
+        }
+    }
+    page->maxDefragSize = findMaxDefragSize(page);
 }
 
 size_t findMaxDefragSize(t_page *page) {
@@ -22,7 +80,7 @@ size_t findMaxDefragSize(t_page *page) {
     size_t defragSize = 0;
 
     while (tmpSize < page->availableSize) {
-        if (block->freed) {
+        if (block->freed == TRUE) {
             tmpSize += block->dataSize;
             if (block->dataSize > defragSize)
                 defragSize = block->dataSize;

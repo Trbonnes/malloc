@@ -8,7 +8,6 @@ HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
 LIBRARY_PATH = $(shell pwd)
-OSTYPE = $(shell uname -s)
 
 # Sources
 SRCDIR = src
@@ -20,13 +19,7 @@ INCLUDES = includes
 
 # Shared library
 NAME =	libft_malloc_${HOSTTYPE}.so
-
-
-ifneq (${OSTYPE}, Linux)
 LINK = ${CC} ${LFLAGS} ${NAME} ${OBJS} -Wl,-force_load libft.a && ln -sf ${NAME} libft_malloc.so
-else
-LINK = 	${CC} ${LFLAGS} ${NAME} ${OBJS} -Wl,--whole-archive libft.a && ln -sf ${NAME} libft_malloc.so
-endif
 
 # Libft
 LIBFT = cd libft && make
@@ -64,4 +57,4 @@ fclean:		clean
 
 re: 		fclean all
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test libft

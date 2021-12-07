@@ -10,7 +10,9 @@ void free(void *ptr) {
     findPointer(ptr, &page, &block);
     if (page && block) {
         block->freed = TRUE;
+        page->availableSize += block->dataSize;
         defragPage(page);
+        removeEmptyPage(page);
     }
 
     return ;
