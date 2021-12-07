@@ -9,7 +9,7 @@ void *calloc(size_t count, size_t size)
 		count = 1;
 		size = 1;
 	}
-	ptr = malloc(size *count);
+	ptr = malloc(size * count);
 	if (ptr == NULL)
 		return (NULL);
 	if (ptr)

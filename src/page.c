@@ -10,7 +10,10 @@ static rlim_t getDataLimit(void) {
 }
 
 void defragPage(t_page *page) {
-    
+    t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
+    t_block *prev;
+    size_t tmpSize = sizeof(t_page);
+
 }
 
 size_t findMaxDefragSize(t_page *page) {
