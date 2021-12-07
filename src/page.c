@@ -10,6 +10,7 @@ static rlim_t getDataLimit(void) {
 }
 
 size_t findMaxDefragSize(t_page *page) {
+    (void)page;
     return 0;
 }
 
@@ -54,7 +55,7 @@ void* allocateNewPage(size_t size) {
     block->freed = TRUE;
 
     page->next = NULL;
-    if (!g_page_head)
+    if (!(t_page *)g_page_head)
         page->prev = NULL;
     else {
         t_page *tmp = g_page_head;

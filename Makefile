@@ -12,7 +12,7 @@ OSTYPE = $(shell uname -s)
 
 # Sources
 SRCDIR = src
-SRCS = smalloc.c realloc.c free.c page.c block.c
+SRCS = malloc.c realloc.c free.c page.c block.c
 OBJECTSDIR = objs
 OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o block.o)
 
@@ -43,7 +43,8 @@ ${NAME}:	${OBJS} ${INCLUDES}
 
 all:		${NAME}
 
-libft: 		${LIBFT}
+libft:		
+			${LIBFT}
 
 test:		${NAME}
 			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror main.c -lft_malloc

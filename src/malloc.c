@@ -1,5 +1,7 @@
 #include "malloc.h"
 
+t_page *g_page_head = NULL;
+
 void *malloc(size_t size) {
     void *ret;
     t_page *page;
