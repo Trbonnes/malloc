@@ -10,8 +10,19 @@ static rlim_t getDataLimit(void) {
 }
 
 size_t findMaxDefragSize(t_page *page) {
-    (void)page;
-    return 0;
+    t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
+    size_t tmpSize = 0;
+    size_t defragSize = 0;
+
+    while (tmpSize < page->availableSize) {
+        if (block->freed) {
+            tmpSize += block->dataSize;
+            if (block->dataSize > defragSize)
+                defragSize = block->dataSize;
+        }
+        block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
+    }
+    return defragSize;
 }
 
 t_pageType getPageType(size_t size) {
@@ -40,6 +51,8 @@ void* allocateNewPage(size_t size) {
 
     if (pageSize > getDataLimit())
         return NULL;
+
+    printf("New Page Size: %zu\n", pageSize);
 
     page = (t_page *)mmap(NULL, pageSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (page == MAP_FAILED)
@@ -71,6 +84,9 @@ void* allocateNewPage(size_t size) {
 void* findAvailablePage(size_t size) {
     t_page *page = g_page_head;
     
+    if (getPageType(size) == LARGE)
+        return allocateNewPage(size);
+
     while (page && size < page->maxDefragSize) { page = page->next; }
 
     return page ? page : allocateNewPage(size);  

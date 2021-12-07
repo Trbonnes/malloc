@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -v -g -nostdlib -fPIC -c -I${INCLUDES}
-LFLAGS = -Wall -Wextra -Werror -v -g -shared -o
+CFLAGS = -Wall -Wextra -Werror -g -nostdlib -fPIC -c -I${INCLUDES}
+LFLAGS = -Wall -Wextra -Werror -g -shared -o
 
 # Environment
 ifeq (${HOSTTYPE},)
@@ -47,7 +47,7 @@ libft:
 			${LIBFT}
 
 test:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror main.c -lft_malloc
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address main.c -lft_malloc
 
 clean:
 			rm -f ${OBJS}

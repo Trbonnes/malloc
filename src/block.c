@@ -6,7 +6,7 @@ void divideBlock(t_block **block, size_t size) {
     if (tmp->dataSize == size)
         return ;
 
-    t_block *next = BLOCK_SHIFT_FORWARD(tmp, sizeof(t_block) + tmp->dataSize);
+    t_block *next = BLOCK_SHIFT_FORWARD(tmp, sizeof(t_block) + size);
 
     next->dataSize = tmp->dataSize - size;
     next->freed = TRUE;
