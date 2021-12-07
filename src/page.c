@@ -117,8 +117,6 @@ void* allocateNewPage(size_t size) {
     if (pageSize > getDataLimit())
         return NULL;
 
-    printf("New Page Size: %zu\n", pageSize);
-
     page = (t_page *)mmap(NULL, pageSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (page == MAP_FAILED)
         return NULL;
