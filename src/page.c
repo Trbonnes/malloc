@@ -9,6 +9,10 @@ static rlim_t getDataLimit(void) {
 	return (rlimit.rlim_max);
 }
 
+void defragPage(t_page *page) {
+    
+}
+
 size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     size_t tmpSize = 0;

@@ -10,7 +10,7 @@ void *malloc(size_t size) {
     if (!size)
         return NULL;
 
-    size = (size + 15) & ~15;
+    size = (size + 15) & ~15; //16 bytes aligment
 
     if (!(t_page *)g_page_head) {
         g_page_head = allocateNewPage(size);

@@ -63,9 +63,10 @@ typedef struct s_page {
 extern t_page *g_page_head;
 
 void *malloc(size_t size);
-// void free(void *ptr);
-// void *realloc(void *ptr, size_t size);
-// void show_alloc_mem();
+void free(void *ptr);
+void *realloc(void *ptr, size_t size);
+void *calloc(size_t count, size_t size);
+void show_alloc_mem();
 
 /***********************************
 Page methods
@@ -76,9 +77,11 @@ size_t getPageSize(size_t size);
 void* allocateNewPage(size_t size);
 void* findAvailablePage(size_t size);
 size_t findMaxDefragSize(t_page *page);
+void defragPage(t_page *page);
 
 /***********************************
 Block methods
 ***********************************/
 
 void *findAvailableBlock(t_page *page, size_t size);
+void findPointer(void *ptr, t_page **page, t_block **block);
