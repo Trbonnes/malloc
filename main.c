@@ -11,6 +11,9 @@ int main(void) {
     void *ptr4 = malloc(4096 * 8);
     printf("XXL ptr: %p\n", ptr4);
 
+    ptr4 = realloc(ptr4, 4096 * 6);
+    printf("XXL ptr: %p\n", ptr4);
+
     free(ptr1);
     free(ptr2);
     free(ptr3);
