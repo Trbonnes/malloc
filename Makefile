@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -nostdlib -fPIC -c
-LFLAGS = -Wall -Wextra -Werror -g -shared -o
+CFLAGS = -Wall -Wextra -Werror -v -g -nostdlib -fPIC -c -I${INCLUDES}
+LFLAGS = -Wall -Wextra -Werror -v -g -shared -o
 
 # Environment
 ifeq (${HOSTTYPE},)
@@ -11,7 +11,8 @@ LIBRARY_PATH = $(shell pwd)
 OSTYPE = $(shell uname -s)
 
 # Sources
-SRCS = src/malloc.c src/realloc.c src/free.c src/page.c src/block.c
+SRCDIR = src
+SRCS = smalloc.c realloc.c free.c page.c block.c
 OBJECTSDIR = objs
 OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o block.o)
 
@@ -31,9 +32,9 @@ endif
 LIBFT = cd libft && make bonus
 
 # Compilation
-${OBJECTSDIR}/%.o: ${SRCS} 
+${OBJECTSDIR}/%.o: ${SRCDIR}/%.c ${INCLUDES}
 	mkdir -p ${OBJECTSDIR}
-	${CC} ${CFLAGS} $< -o $@ -I ${INCLUDES}
+	${CC} ${CFLAGS} $< -o $@
 
 ${NAME}:	${OBJS} ${INCLUDES}
 			${LIBFT}
