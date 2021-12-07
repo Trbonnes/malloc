@@ -11,6 +11,5 @@ int main(void) {
     void *ptr4 = malloc(4096 * 8);
     printf("XXL ptr: %p\n", ptr4);
 
-
     return 0;
 }

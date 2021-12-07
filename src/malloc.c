@@ -10,6 +10,8 @@ void *malloc(size_t size) {
     if (!size)
         return NULL;
 
+    size = (size + 15) & ~15;
+
     if (!(t_page *)g_page_head) {
         g_page_head = allocateNewPage(size);
         page = g_page_head;
@@ -19,7 +21,6 @@ void *malloc(size_t size) {
 
     if (!page)
         return NULL;
-
 
     printf("PAGE: %p\n", page);
     block = findAvailableBlock(page, size);

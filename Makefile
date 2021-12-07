@@ -29,7 +29,7 @@ LINK = 	${CC} ${LFLAGS} ${NAME} ${OBJS} -Wl,--whole-archive libft.a && ln -sf ${
 endif
 
 # Libft
-LIBFT = cd libft && make bonus
+LIBFT = cd libft && make
 
 # Compilation
 ${OBJECTSDIR}/%.o: ${SRCDIR}/%.c ${INCLUDES}
@@ -59,6 +59,7 @@ fclean:		clean
 			rm -f ${NAME}
 			rm -f libft_malloc.so
 			rm -f a.out
+			rm -rf a.out.dSYM
 			cd libft && make fclean
 
 re: 		fclean all
