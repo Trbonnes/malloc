@@ -32,7 +32,7 @@ ${OBJECTSDIR}/%.o: ${SRCDIR}/%.c ${INCLUDES}
 ${NAME}:	${OBJS} ${INCLUDES}
 			${LIBFT}
 			${LINK}
-			export LD_LIBRARY_PATH=${LIBRARY_PATH}:$$LD_LIBRARY_PATH
+			$(shell export LD_LIBRARY_PATH=${LIBRARY_PATH}:$$LD_LIBRARY_PATH)
 
 all:		${NAME}
 
