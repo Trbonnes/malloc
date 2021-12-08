@@ -5,15 +5,21 @@ void findPointer(void *ptr, t_page **ptrPage, t_block **ptrBlock) {
     t_block *block;
 
     while (page) {
+        printf("segv page: %p\n", block);
         block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
         size_t exploredSize = sizeof(t_page);
+        printf("segv block: %p\n", block);
+        printf("block dataSize: %zu\n", block->dataSize);
+        printf("segv pointer: %p\n", BLOCK_SHIFT_FORWARD(block, sizeof(t_block)));
         while (exploredSize < page->totalSize) {
+            if (block->freed == FALSE)
+                printf("allocated\n");
             if (block->freed == FALSE
             && ptr == BLOCK_SHIFT_FORWARD(block, sizeof(t_block))) {
                 *ptrPage = page;
                 *ptrBlock = block;
                 return ;
-                }
+            }
             block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
             exploredSize += sizeof(t_block) + block->dataSize;
         }
