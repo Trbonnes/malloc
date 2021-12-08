@@ -9,6 +9,18 @@ static rlim_t getDataLimit(void) {
 	return (rlimit.rlim_max);
 }
 
+t_page  *getLastPage()
+{
+	if (!(t_page *)g_page_head)
+		return (NULL);
+
+    t_page *page = g_page_head;
+	while (page->next)
+		page = page->next;
+
+	return page;
+}
+
 t_bool isLastPage(t_pageType type) {
 
     t_page *page = g_page_head;

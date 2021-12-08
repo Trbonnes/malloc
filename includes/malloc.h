@@ -79,6 +79,7 @@ void* findAvailablePage(size_t size);
 size_t findMaxDefragSize(t_page *page);
 void defragPage(t_page *page);
 void removeEmptyPage(t_page *page);
+t_page  *getLastPage();
 
 /***********************************
 Block methods

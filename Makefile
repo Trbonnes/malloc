@@ -11,9 +11,9 @@ LIBRARY_PATH = $(shell pwd)
 
 # Sources
 SRCDIR = src
-SRCS = malloc.c realloc.c free.c page.c block.c
+SRCS = malloc.c calloc.c realloc.c free.c page.c block.c show_alloc_mem.c
 OBJECTSDIR = objs
-OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o realloc.o free.o page.o block.o)
+OBJS = $(addprefix $(OBJECTSDIR)/, malloc.o calloc.o realloc.o free.o page.o block.o show_alloc_mem.o)
 
 INCLUDES = includes
 

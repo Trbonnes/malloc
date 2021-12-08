@@ -12,19 +12,25 @@ int main(void) {
     printf("XXL ptr: %p\n", ptr4);
     ptr4[4096] = '\0';
 
+    show_alloc_mem();
+
     ptr2 = realloc(ptr2, 220);
     printf("SMALL ptr realloc: %p\n", ptr2);
 
-    // ptr2 = realloc(ptr2, 280);
-    // printf("SMALL ptr realloc: %p\n", ptr2);
+    ptr2 = realloc(ptr2, 280);
+    printf("SMALL ptr realloc: %p\n", ptr2);
 
     ptr4 = realloc(ptr4, 4096 * 6);
     printf("XXL ptr realloc: %p\n", ptr4);
+
+    show_alloc_mem();
 
     free(ptr1);
     free(ptr2);
     free(ptr3);
     free(ptr4);
+
+    show_alloc_mem();
 
     free(NULL);
 
