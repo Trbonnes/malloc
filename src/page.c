@@ -58,15 +58,16 @@ void removeEmptyPage(t_page *page) {
 void defragPage(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     t_block *next = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
-    size_t tmpSize = sizeof(t_page) + sizeof(t_block) + block->dataSize;
+    size_t exploredSize = sizeof(t_page) + sizeof(t_block) + block->dataSize;
 
-    while (tmpSize < page->totalSize) {
-        tmpSize += sizeof(t_block) + next->dataSize;
+    while (exploredSize < page->totalSize) {
+        exploredSize += sizeof(t_block) + next->dataSize;
         if (block->freed == TRUE && next->freed == TRUE) {
             block->dataSize += sizeof(t_block) + next->dataSize;
+            page->blockCount--;
             next = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
         }
-        else if (tmpSize < page->totalSize) {
+        else if (exploredSize < page->totalSize) {
             block = next;
             next = BLOCK_SHIFT_FORWARD(next, sizeof(t_block) + block->dataSize);
         }
@@ -76,15 +77,11 @@ void defragPage(t_page *page) {
 
 size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
-    size_t tmpSize = 0;
     size_t defragSize = 0;
 
-    while (tmpSize < page->availableSize) {
-        if (block->freed == TRUE) {
-            tmpSize += block->dataSize;
-            if (block->dataSize > defragSize)
+    for (size_t i = 0; i < page->blockCount; i++) {
+        if (block->freed == TRUE && block->dataSize > defragSize)
                 defragSize = block->dataSize;
-        }
         block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
     }
     return defragSize;
@@ -146,11 +143,16 @@ void* allocateNewPage(size_t size) {
 
 void* findAvailablePage(size_t size) {
     t_page *page = g_page_head;
+    t_pageType type = getPageType(size);
     
-    if (getPageType(size) == LARGE)
+    if (type == LARGE)
         return allocateNewPage(size);
 
-    while (page && size < page->maxDefragSize) { page = page->next; }
+    while (page) {
+        if (page->type == type && size < page->maxDefragSize)
+            break ;
+        page = page->next;
+    }
 
     return page ? page : allocateNewPage(size);  
 }

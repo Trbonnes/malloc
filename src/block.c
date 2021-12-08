@@ -5,15 +5,8 @@ void findPointer(void *ptr, t_page **ptrPage, t_block **ptrBlock) {
     t_block *block;
 
     while (page) {
-        printf("segv page: %p\n", block);
         block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
-        size_t exploredSize = sizeof(t_page);
-        printf("segv block: %p\n", block);
-        printf("block dataSize: %zu\n", block->dataSize);
-        printf("segv pointer: %p\n", BLOCK_SHIFT_FORWARD(block, sizeof(t_block)));
-        while (exploredSize < page->totalSize) {
-            if (block->freed == FALSE)
-                printf("allocated\n");
+        for (size_t i = 0; i < page->blockCount; i++) {
             if (block->freed == FALSE
             && ptr == BLOCK_SHIFT_FORWARD(block, sizeof(t_block))) {
                 *ptrPage = page;
@@ -21,7 +14,6 @@ void findPointer(void *ptr, t_page **ptrPage, t_block **ptrBlock) {
                 return ;
             }
             block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
-            exploredSize += sizeof(t_block) + block->dataSize;
         }
         page = page->next;
     }
@@ -31,18 +23,23 @@ void findPointer(void *ptr, t_page **ptrPage, t_block **ptrBlock) {
     return ;
 }
 
-void divideBlock(t_block **block, size_t size) {
+void divideBlock(t_page *page, t_block **block, size_t size) {
     t_block *tmp = *block;
 
-    if (tmp->dataSize == size)
+    tmp->freed = FALSE;
+    page->availableSize -= size;
+
+    if (tmp->dataSize == size) {
         return ;
+    }
 
     t_block *next = BLOCK_SHIFT_FORWARD(tmp, sizeof(t_block) + size);
 
     next->dataSize = tmp->dataSize - size;
     next->freed = TRUE;
+
     tmp->dataSize = size;
-    tmp->freed = FALSE;
+    page->blockCount++;
 }
 
 void* findAvailableBlock(t_page *page, size_t size) {
@@ -52,9 +49,7 @@ void* findAvailableBlock(t_page *page, size_t size) {
     while (block->dataSize < size)
         block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
 
-    divideBlock(&block, size);
-    page->availableSize -= size;
-    page->blockCount++;
+    divideBlock(page, &block, size);
     page->maxDefragSize = findMaxDefragSize(page);
 
     return block;
