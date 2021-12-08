@@ -14,11 +14,15 @@ int main(void) {
 
     show_alloc_mem();
 
+    ptr2 = realloc(ptr2, 280);
+    printf("SMALL ptr realloc: %p\n", ptr2);
+
+    show_alloc_mem();
+
     ptr2 = realloc(ptr2, 220);
     printf("SMALL ptr realloc: %p\n", ptr2);
 
-    ptr2 = realloc(ptr2, 280);
-    printf("SMALL ptr realloc: %p\n", ptr2);
+    show_alloc_mem();
 
     ptr4 = realloc(ptr4, 4096 * 6);
     printf("XXL ptr realloc: %p\n", ptr4);
