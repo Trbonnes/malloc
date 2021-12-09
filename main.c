@@ -6,6 +6,8 @@ int main(void) {
     printf("TINY ptr: %p\n", ptr1);
     void *ptr2 = malloc(240);
     printf("SMALL ptr: %p\n", ptr2);
+    void *ptr2b = malloc(240);
+    printf("SMALL ptr: %p\n", ptr2b);
     void *ptr3 = malloc(2048);
     printf("LARGE ptr: %p\n", ptr3);
     char *ptr4 = malloc(4096 * 8);

@@ -29,7 +29,7 @@ static size_t printBlocks(t_page *page) {
 			ft_putstr_fd(" - ", 1);
             printPointer((size_t)end, 9);
 			ft_putstr_fd(" : ", 1);
-            ft_putstr_fd(ft_itoa(block->dataSize), 1);
+            ft_putnbr_fd(block->dataSize, 1);
 			ft_putstr_fd(" bytes\n", 1);
 			size += block->dataSize;
 		}
@@ -63,6 +63,6 @@ void show_alloc_mem() {
 		last = last->prev;
 	}
 	ft_putstr_fd("Total : ", 1);
-	ft_putstr_fd(ft_itoa(totalSize), 1);
+	ft_putnbr_fd(totalSize, 1);
 	ft_putstr_fd(" bytes\n", 1);
 }

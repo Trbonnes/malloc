@@ -91,6 +91,9 @@ size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     size_t defragSize = 0;
 
+    // printf("investigating page: %p\n", page);
+    // printf("block count: %zu\n", page->blockCount);
+
     for (size_t i = 0; i < page->blockCount; i++) {
         if (block->freed == TRUE && block->dataSize > defragSize)
                 defragSize = block->dataSize;
