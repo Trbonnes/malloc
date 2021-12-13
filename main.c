@@ -2,14 +2,25 @@
 
 int main(void) {
 
-    void *ptr1 = malloc(2);
+    char *ptr1 = malloc(2);
     printf("TINY ptr: %p\n", ptr1);
-    void *ptr2 = malloc(240);
+    ptr1[1] = '\0';
+    char *ptr1b = malloc(2);
+    printf("TINY ptr b: %p\n", ptr1b);
+    ptr1b[1] = '\0';
+    char *ptr2 = malloc(240);
     printf("SMALL ptr: %p\n", ptr2);
-    void *ptr2b = malloc(240);
-    printf("SMALL ptr: %p\n", ptr2b);
-    void *ptr3 = malloc(2048);
+    ptr2[239] = '\0';
+    char *ptr2b = malloc(239);
+    printf("SMALL ptr b: %p\n", ptr2b);
+    ptr2b[238] = '\0';
+    char *ptr2c = malloc(241);
+    printf("SMALL ptr c: %p\n", ptr2c);
+    ptr2c[240] = '\0';
+    char *ptr3 = malloc(2048);
     printf("LARGE ptr: %p\n", ptr3);
+    ptr3[2047] = '\0';
+    // ptr3[2048] = '\0';
     char *ptr4 = malloc(4096 * 8);
     printf("XXL ptr: %p\n", ptr4);
     ptr4[4096] = '\0';
@@ -32,7 +43,10 @@ int main(void) {
     show_alloc_mem();
 
     free(ptr1);
+    free(ptr1b);
     free(ptr2);
+    free(ptr2b);
+    free(ptr2c);
     free(ptr3);
     free(ptr4);
 

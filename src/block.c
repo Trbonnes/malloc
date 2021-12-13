@@ -46,7 +46,7 @@ void* findAvailableBlock(t_page *page, size_t size) {
 
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
 
-    while (block->dataSize < size)
+    while (block->freed == FALSE || block->dataSize < size)
         block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
 
     divideBlock(page, &block, size);
