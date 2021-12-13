@@ -64,5 +64,5 @@ void show_alloc_mem() {
 	}
 	ft_putstr_fd("Total : ", 1);
 	ft_putnbr_fd(totalSize, 1);
-	ft_putstr_fd(" bytes\n", 1);
+	ft_putstr_fd(" bytes\n\n", 1);
 }
