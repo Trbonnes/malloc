@@ -35,7 +35,7 @@ void divideBlock(t_page *page, t_block **block, size_t size) {
 
     t_block *next = BLOCK_SHIFT_FORWARD(tmp, sizeof(t_block) + size);
 
-    next->dataSize = tmp->dataSize - size;
+    next->dataSize = tmp->dataSize - size - sizeof(t_block);
     next->freed = TRUE;
 
     tmp->dataSize = size;

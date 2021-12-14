@@ -69,8 +69,6 @@ void removeEmptyPage(t_page *page) {
 
 void defragPage(t_page *page) {
 
-    printf("Defragmentating page: %p\n", page);
-
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     t_block *next = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
     size_t exploredSize = sizeof(t_page) + sizeof(t_block) + block->dataSize;
@@ -94,18 +92,18 @@ size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     size_t defragSize = 0;
 
-    printf("investigating page: %p\n", page);
-    printf("block count: %zu\n", page->blockCount);
+    // printf("investigating page: %p\n", page);
+    // printf("block count: %zu\n", page->blockCount);
 
     for (size_t i = 0; i < page->blockCount; i++) {
 
-        printf("investigating block number: %zu -- %p\n", i, block);
-        if (block->freed == FALSE)
-            printf("-- ALLOCATED %zu bytes --\n", block->dataSize);
-        else if (block->freed == TRUE)
-            printf("-- FREED %zu bytes --\n", block->dataSize);
-        else
-            printf("-- ???? %zu bytes --\n", block->dataSize);
+        // printf("investigating block number: %zu -- %p\n", i, block);
+        // if (block->freed == FALSE)
+        //     printf("-- ALLOCATED %zu bytes --\n", block->dataSize);
+        // else if (block->freed == TRUE)
+        //     printf("-- FREED %zu bytes --\n", block->dataSize);
+        // else
+        //     printf("-- ???? %zu bytes --\n", block->dataSize);
 
         if (block->freed == TRUE && block->dataSize > defragSize) 
                 defragSize = block->dataSize;

@@ -2,7 +2,7 @@
 
 void *realloc(void *ptr, size_t size) {
 
-    printf("realloc called\n");
+    // printf("realloc called\n");
 
     if (!ptr)
 		return (malloc(size));

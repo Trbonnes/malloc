@@ -4,7 +4,7 @@ t_page *g_page_head = NULL;
 
 void *malloc(size_t size) {
 
-    printf("malloc called\n");
+    // printf("malloc called\n");
 
     void *ret;
     t_page *page;
