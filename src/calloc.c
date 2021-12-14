@@ -1,7 +1,9 @@
 #include "malloc.h"
 
-void *calloc(size_t count, size_t size)
-{
+void *calloc(size_t count, size_t size) {
+
+	write(1, "calloc called\n", 14);
+
 	void *ptr;
 
 	if (count == 0 || size == 0) {

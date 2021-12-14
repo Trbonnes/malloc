@@ -18,8 +18,8 @@ Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won
 16 KB / (128 + 32) = 102.4. So, counting the t_page at the start of the 16KB heap , we can store 102 times a 128 bytes malloc
 
 For a pagesize of 4096 bytes
-TINY  - block < 128 bytes - heap 16 KB
-SMALL - block < 1024 bytes - heap 128 KB
+TINY  - block < 128 bytes - page 16 KB
+SMALL - block < 1024 bytes - page 128 KB
 LARGE - block > 1024 bytes
 ***********************************/
 
@@ -87,3 +87,11 @@ Block methods
 
 void *findAvailableBlock(t_page *page, size_t size);
 void findPointer(void *ptr, t_page **page, t_block **block);
+
+/***********************************
+Print methods
+***********************************/
+
+void printPointer(size_t addr, size_t length);
+size_t printBlocks(t_page *page);
+void printPageHeader(t_page *page);

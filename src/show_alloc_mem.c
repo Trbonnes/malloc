@@ -1,7 +1,6 @@
 #include "malloc.h"
 
-static void printPointer(size_t addr, size_t length)
-{
+void printPointer(size_t addr, size_t length) {
 	char	*str = "0123456789ABCDEF";
 
 	if (addr / 16)
@@ -15,7 +14,7 @@ static void printPointer(size_t addr, size_t length)
 	write(1, &str[addr % 16], 1);
 }
 
-static size_t printBlocks(t_page *page) {
+size_t printBlocks(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
 	void *start = NULL;
 	void *end = NULL;
@@ -38,7 +37,7 @@ static size_t printBlocks(t_page *page) {
 	return size;
 }
 
-static void printPageHeader(t_page *page) {
+void printPageHeader(t_page *page) {
 
     if (page->type == TINY)
 	    ft_putstr_fd("TINY", 1);
