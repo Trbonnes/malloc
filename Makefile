@@ -42,6 +42,24 @@ libft:
 test:		${NAME}
 			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address main.c -lft_malloc
 
+test0:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test0.c -lft_malloc
+
+test1:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test1.c -lft_malloc
+
+test2:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test2.c -lft_malloc
+	
+test3:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test3.c -lft_malloc
+
+test4:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test4.c -lft_malloc
+
+test5:		${NAME}
+			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test5.c -lft_malloc
+
 clean:
 			rm -f ${OBJS}
 			rm -rf ${OBJECTSDIR}
