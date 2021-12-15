@@ -2,7 +2,7 @@
 
 void *realloc(void *ptr, size_t size) {
 
-    write(1, "realloc called\n", 15);
+    write(1, "\nrealloc called\n", 16);
 
     if (!ptr)
 		return (malloc(size));

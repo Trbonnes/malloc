@@ -2,7 +2,7 @@
 
 void free(void *ptr) {
 
-    write(1, "free called\n", 12);
+    write(1, "\nfree called\n", 13);
 
     if (!ptr || !(t_page *)g_page_head)
         return ;

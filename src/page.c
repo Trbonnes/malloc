@@ -92,18 +92,36 @@ size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     size_t defragSize = 0;
 
-    // printf("investigating page: %p\n", page);
-    // printf("block count: %zu\n", page->blockCount);
+    // ft_putstr_fd("investigating page: ",1);
+    // printPointer((size_t)page, 9);
+    // ft_putstr_fd(" - ", 1);
+    // ft_putstr_fd("block count: ", 1);
+    // ft_putnbr_fd(page->blockCount, 1);
+    // ft_putstr_fd("\n", 1);
 
     for (size_t i = 0; i < page->blockCount; i++) {
 
-        // printf("investigating block number: %zu -- %p\n", i, block);
-        // if (block->freed == FALSE)
-        //     printf("-- ALLOCATED %zu bytes --\n", block->dataSize);
-        // else if (block->freed == TRUE)
-        //     printf("-- FREED %zu bytes --\n", block->dataSize);
-        // else
-        //     printf("-- ???? %zu bytes --\n", block->dataSize);
+        // ft_putstr_fd("investigating block number: ", 1);
+        // ft_putnbr_fd(i, 1);
+        // ft_putstr_fd(" - ", 1);
+        // printPointer((size_t)block, 9);
+        // ft_putstr_fd("\n", 1);
+
+        // if (block->freed == FALSE) {
+        //     ft_putstr_fd("-- ALLOCATED - ", 1);
+        //     ft_putnbr_fd(block->dataSize, 1);
+        //     ft_putstr_fd(" bytes --\n", 1);
+        // }
+        // else if (block->freed == TRUE) {
+        //     ft_putstr_fd("-- FREED - ", 1);
+        //     ft_putnbr_fd(block->dataSize, 1);
+        //     ft_putstr_fd(" bytes --\n", 1);
+        // }
+        // else {
+        //     ft_putstr_fd("-- ???? - ", 1);
+        //     ft_putnbr_fd(block->dataSize, 1);
+        //     ft_putstr_fd(" bytes --\n", 1);
+        // }
 
         if (block->freed == TRUE && block->dataSize > defragSize) 
                 defragSize = block->dataSize;

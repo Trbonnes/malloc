@@ -2,7 +2,7 @@
 
 void *calloc(size_t count, size_t size) {
 
-	write(1, "calloc called\n", 14);
+	write(1, "\ncalloc called\n", 15);
 
 	void *ptr;
 

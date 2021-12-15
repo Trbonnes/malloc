@@ -34,6 +34,9 @@ size_t printBlocks(t_page *page) {
 		}
 		block = BLOCK_SHIFT_FORWARD(block, sizeof(t_block) + block->dataSize);
 	}
+	ft_putstr_fd("PAGE TOTAL ALLOCATED SIZE : ", 1);
+	ft_putnbr_fd(size, 1);
+	ft_putstr_fd(" bytes\n", 1);
 	return size;
 }
 

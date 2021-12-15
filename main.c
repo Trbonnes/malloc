@@ -25,9 +25,9 @@ int main(void) {
     // printf("XXL ptr: %p\n", ptr4);
     // ptr4[4096] = '\0';
 
-    // for (int i = 0; i < 200; i++) {
-    //     malloc(128);
-    // }
+    for (int i = 0; i < 200; i++) {
+        malloc(128);
+    }
 
     show_alloc_mem();
 
