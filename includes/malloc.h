@@ -58,6 +58,8 @@ typedef struct s_page {
     struct s_page *next;
     struct s_page *prev;
 
+    char padding[56 % 16]; //align page header on 16 bytes for pointer alignment
+
 }   t_page;
 
 extern t_page *g_page_head;

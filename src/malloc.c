@@ -4,8 +4,8 @@ t_page *g_page_head = NULL;
 
 void *malloc(size_t size) {
 
-    write(1, "\nmalloc called : ", 17);
-    ft_putnbr_fd(size, 1);
+    // write(1, "\nmalloc called : ", 17);
+    // ft_putnbr_fd(size, 1);
     // show_alloc_mem();
 
     void *ret;
@@ -15,7 +15,7 @@ void *malloc(size_t size) {
     if (!size)
         return NULL;
 
-    size = (size + 15) & ~15; //16 bytes aligment
+    size = (size + 15) & ~15; //16 bytes aligment of allocation
 
     if (!(t_page *)g_page_head) {
         g_page_head = allocateNewPage(size);
@@ -38,8 +38,9 @@ void *malloc(size_t size) {
     // printPointer((size_t)block, 9);
     ret = BLOCK_SHIFT_FORWARD(block, sizeof(t_block));
     ft_memset(ret, 0xaa, size);
-    ft_putstr_fd("\nreturning pointer\n", 1);
-    printPointer((size_t)ret, 9);
+    // ft_putstr_fd("\nreturning pointer\n", 1);
+    // printPointer((size_t)ret, 9);
+    // ft_putstr_fd("\n", 1);
 
     // show_alloc_mem();
 
