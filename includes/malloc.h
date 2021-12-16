@@ -14,8 +14,8 @@
 /**********************************
 For tiny blocks, let’s say we use 128 bytes for a maximum malloc size.
 If we fill a page with 128 of them, it gives us a TINY_ALLOCATION_SIZE of 16KB (128 * 128).
-Since each malloc has to store its metadata (sizeof(t_block) = 32 bytes), we won’t be able to store all the 128 blocks.
-16 KB / (128 + 32) = 102.4. So, counting the t_page at the start of the 16KB heap , we can store 102 times a 128 bytes malloc
+Since each malloc has to store its metadata (sizeof(t_page) = 64 bytes) and (sizeof(t_block) = 16 bytes), we won’t be able to store all the 128 blocks.
+16 KB / (128 + 16) = 113.7778. So, counting the t_page at the start of the 16KB page, we can store 113 times a 128 bytes malloc
 
 For a pagesize of 4096 bytes
 TINY  - block < 128 bytes - page 16 KB
@@ -63,12 +63,19 @@ typedef struct s_page {
 }   t_page;
 
 extern t_page *g_page_head;
+extern pthread_mutex_t g_malloc_mutex;
 
 void *malloc(size_t size);
+void *do_malloc(size_t size);
 void free(void *ptr);
+void do_free(void *ptr);
 void *realloc(void *ptr, size_t size);
+void *do_realloc(void *ptr, size_t size);
 void *calloc(size_t count, size_t size);
+void *do_calloc(size_t count, size_t size);
 void show_alloc_mem();
+void do_show_alloc_mem();
+
 
 /***********************************
 Page methods

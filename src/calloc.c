@@ -1,6 +1,6 @@
 #include "malloc.h"
 
-void *calloc(size_t count, size_t size) {
+void *do_calloc(size_t count, size_t size) {
 
 	// write(1, "\ncalloc called\n", 15);
 
@@ -10,8 +10,18 @@ void *calloc(size_t count, size_t size) {
 		count = 1;
 		size = 1;
 	}
-	ptr = malloc(size * count);
+	ptr = do_malloc(size * count);
 	if (ptr)
 		ft_bzero(ptr, count * size);
 	return (ptr);
+}
+
+void *calloc(size_t count, size_t size) {
+    void *ret;
+
+    pthread_mutex_lock(&g_malloc_mutex);
+    ret = do_calloc(count, size);
+    pthread_mutex_unlock(&g_malloc_mutex);
+
+    return ret;
 }

@@ -64,7 +64,7 @@ void removeEmptyPage(t_page *page) {
     else {
         g_page_head = page->next;
     }
-	munmap(page,page->totalSize);
+	munmap(page, page->totalSize);
 }
 
 void defragPage(t_page *page) {

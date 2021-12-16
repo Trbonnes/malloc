@@ -1,13 +1,13 @@
 #include "malloc.h"
 
-void *realloc(void *ptr, size_t size) {
+void *do_realloc(void *ptr, size_t size) {
 
     // write(1, "\nrealloc called\n", 16);
 
     if (!ptr)
-		return (malloc(size));
+		return (do_malloc(size));
 	else if (size == 0) {
-		free(ptr);
+		do_free(ptr);
 		return (NULL);
 	}
 
@@ -18,11 +18,21 @@ void *realloc(void *ptr, size_t size) {
     if (page && block) {
         if (block->dataSize == size)
             return ptr;
-        new = malloc(size);
+        new = do_malloc(size);
         ft_memmove(new, ptr, block->dataSize > size ? size : block->dataSize);
-        free(ptr);
+        do_free(ptr);
         return new;
     }
 
     return NULL;
+}
+
+void *realloc(void *ptr, size_t size) {
+    void *ret;
+
+    pthread_mutex_lock(&g_malloc_mutex);
+    ret = do_realloc(ptr, size);
+    pthread_mutex_unlock(&g_malloc_mutex);
+
+    return ret;
 }

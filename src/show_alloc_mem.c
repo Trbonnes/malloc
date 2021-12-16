@@ -53,7 +53,7 @@ void printPageHeader(t_page *page) {
 	ft_putstr_fd("\n", 1);
 }
 
-void show_alloc_mem() {
+void do_show_alloc_mem() {
 	t_page	*last = getLastPage();
 	size_t	totalSize = 0;
 
@@ -67,4 +67,10 @@ void show_alloc_mem() {
 	ft_putstr_fd("Total : ", 1);
 	ft_putnbr_fd(totalSize, 1);
 	ft_putstr_fd(" bytes\n\n", 1);
+}
+
+void show_alloc_mem() {
+    pthread_mutex_lock(&g_malloc_mutex);
+    do_show_alloc_mem();
+    pthread_mutex_unlock(&g_malloc_mutex);
 }

@@ -1,6 +1,6 @@
 #include "malloc.h"
 
-void free(void *ptr) {
+void do_free(void *ptr) {
 
     // write(1, "\nfree called\n", 13);
 
@@ -17,5 +17,10 @@ void free(void *ptr) {
         removeEmptyPage(page);
     }
 
-    return ;
+}
+
+void free(void *ptr) {
+    pthread_mutex_lock(&g_malloc_mutex);
+    do_free(ptr);
+    pthread_mutex_unlock(&g_malloc_mutex);
 }

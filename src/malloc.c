@@ -1,8 +1,9 @@
 #include "malloc.h"
 
 t_page *g_page_head = NULL;
+pthread_mutex_t g_malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void *malloc(size_t size) {
+void *do_malloc(size_t size) {
 
     // write(1, "\nmalloc called : ", 17);
     // ft_putnbr_fd(size, 1);
@@ -43,6 +44,16 @@ void *malloc(size_t size) {
     // ft_putstr_fd("\n", 1);
 
     // show_alloc_mem();
+
+    return ret;
+}
+
+void *malloc(size_t size) {
+    void *ret;
+
+    pthread_mutex_lock(&g_malloc_mutex);
+    ret = do_malloc(size);
+    pthread_mutex_unlock(&g_malloc_mutex);
 
     return ret;
 }
