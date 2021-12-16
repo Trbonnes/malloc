@@ -92,36 +92,7 @@ size_t findMaxDefragSize(t_page *page) {
     t_block *block = BLOCK_SHIFT_FORWARD(page, sizeof(t_page));
     size_t defragSize = 0;
 
-    // ft_putstr_fd("investigating page: ",1);
-    // printPointer((size_t)page, 9);
-    // ft_putstr_fd(" - ", 1);
-    // ft_putstr_fd("block count: ", 1);
-    // ft_putnbr_fd(page->blockCount, 1);
-    // ft_putstr_fd("\n", 1);
-
     for (size_t i = 0; i < page->blockCount; i++) {
-
-        // ft_putstr_fd("investigating block number: ", 1);
-        // ft_putnbr_fd(i, 1);
-        // ft_putstr_fd(" - ", 1);
-        // printPointer((size_t)block, 9);
-        // ft_putstr_fd("\n", 1);
-
-        // if (block->freed == FALSE) {
-        //     ft_putstr_fd("-- ALLOCATED - ", 1);
-        //     ft_putnbr_fd(block->dataSize, 1);
-        //     ft_putstr_fd(" bytes --\n", 1);
-        // }
-        // else if (block->freed == TRUE) {
-        //     ft_putstr_fd("-- FREED - ", 1);
-        //     ft_putnbr_fd(block->dataSize, 1);
-        //     ft_putstr_fd(" bytes --\n", 1);
-        // }
-        // else {
-        //     ft_putstr_fd("-- ???? - ", 1);
-        //     ft_putnbr_fd(block->dataSize, 1);
-        //     ft_putstr_fd(" bytes --\n", 1);
-        // }
 
         if (block->freed == TRUE && block->dataSize > defragSize) 
                 defragSize = block->dataSize;

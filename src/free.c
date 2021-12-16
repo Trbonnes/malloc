@@ -2,8 +2,6 @@
 
 void do_free(void *ptr) {
 
-    // write(1, "\nfree called\n", 13);
-
     if (!ptr || !(t_page *)g_page_head)
         return ;
 

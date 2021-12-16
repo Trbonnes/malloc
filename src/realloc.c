@@ -2,8 +2,6 @@
 
 void *do_realloc(void *ptr, size_t size) {
 
-    // write(1, "\nrealloc called\n", 16);
-
     if (!ptr)
 		return (do_malloc(size));
 	else if (size == 0) {
