@@ -17,7 +17,7 @@ void *do_realloc(void *ptr, size_t size) {
         if (block->dataSize == size)
             return ptr;
         new = do_malloc(size);
-        ft_memmove(new, ptr, block->dataSize > size ? size : block->dataSize);
+        ft_memcpy(new, ptr, block->dataSize > size ? size : block->dataSize);
         do_free(ptr);
         return new;
     }
