@@ -42,23 +42,13 @@ libft:
 test:		${NAME}
 			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address main.c -lft_malloc
 
-test0:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test0.c -lft_malloc
-
-test1:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test1.c -lft_malloc
-
-test2:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test2.c -lft_malloc
-	
-test3:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test3.c -lft_malloc
-
-test4:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test4.c -lft_malloc
-
-test5:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address ./test/test5.c -lft_malloc
+correction:	${NAME}
+			${CC} -o test0 ./test/test0.c
+			${CC} -o test1 ./test/test1.c
+			${CC} -o test2 ./test/test2.c
+			${CC} -o test3 ./test/test3.c
+			${CC} -o test4 ./test/test4.c
+			${CC} -o test5 ./test/test5.c
 
 clean:
 			rm -f ${OBJS}
@@ -69,10 +59,10 @@ clean:
 fclean:		clean
 			rm -f ${NAME}
 			rm -f libft_malloc.so
-			rm -f a.out
+			rm -f a.out test0 test1 test2 test3 test4 test5
 			rm -rf a.out.dSYM
 			cd libft && make fclean
 
 re: 		fclean all
 
-.PHONY: all clean fclean re test libft
+.PHONY: all clean fclean re test libft correction
