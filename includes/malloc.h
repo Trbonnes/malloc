@@ -25,7 +25,7 @@ LARGE - block > 1024 bytes
 
 # define TINY_ALLOCATION_SIZE (4 * getpagesize())
 # define TINY_BLOCK_SIZE (TINY_ALLOCATION_SIZE / 128)
-# define SMALL_ALLOCATION_SIZE (16 * getpagesize())
+# define SMALL_ALLOCATION_SIZE (32 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_ALLOCATION_SIZE / 128)
 
 typedef enum	e_bool {

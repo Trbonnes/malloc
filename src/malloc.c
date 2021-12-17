@@ -5,6 +5,9 @@ pthread_mutex_t g_malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *do_malloc(size_t size) {
 
+    // ft_putnbr_fd(size, 1);
+    // ft_putstr_fd("\n", 1);
+
     void *ret;
     t_page *page;
     t_block *block;

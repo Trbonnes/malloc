@@ -40,7 +40,7 @@ libft:
 			${LIBFT}
 
 test:		${NAME}
-			${CC} -L${LIBRARY_PATH} -Wall -Wextra -Werror -g -fsanitize=address main.c -lft_malloc
+			${CC} -L${LIBRARY_PATH} -g -fsanitize=address main.c -lft_malloc
 
 correction:	${NAME}
 			${CC} -o test0 ./test/test0.c
@@ -49,6 +49,7 @@ correction:	${NAME}
 			${CC} -o test3 ./test/test3.c
 			${CC} -o test4 ./test/test4.c
 			${CC} -o test5 ./test/test5.c
+			${CC} -L${LIBRARY_PATH} -o test6 ./test/test6.c -lft_malloc
 
 clean:
 			rm -f ${OBJS}
@@ -59,7 +60,7 @@ clean:
 fclean:		clean
 			rm -f ${NAME}
 			rm -f libft_malloc.so
-			rm -f a.out test0 test1 test2 test3 test4 test5
+			rm -f a.out test0 test1 test2 test3 test4 test5 test6
 			rm -rf a.out.dSYM
 			cd libft && make fclean
 
